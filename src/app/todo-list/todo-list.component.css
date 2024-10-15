@@ -1,0 +1,14 @@
+.inner-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  nz-list-item {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  nz-list-item-action {
+    margin-left: auto; /* Garante que as ações fiquem alinhadas à direita */
+  }
+  
