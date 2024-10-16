@@ -3,29 +3,27 @@
     <div class="inner-content">
       <div nz-row>
         <div nz-col nzSpan="14" nzOffset="5">
-          <h1>Codebrains Todos</h1>
+          <h1 class="header-title">Full Stack Challenge</h1>
           <app-todo-form [refresh]="loadAll"></app-todo-form>
           <nz-list nzItemLayout="horizontal">
-            <nz-list-item *ngFor="let todo of todos$ | async">
+            <nz-list-item *ngFor="let todo of todos$ | async" class="todo-item">
               <ng-container>
-                <!-- Verifique se o todo está em modo de edição -->
                 <div *ngIf="!todo.editing; else editMode">
-                  <nz-tag [nzColor]="'cyan'">{{todo.title}}</nz-tag>
+                  <nz-tag [nzColor]="todo.completed ? 'green' : 'cyan'">{{todo.title}}</nz-tag>
                 </div>
-                <!-- Modo de Edição -->
                 <ng-template #editMode>
-                  <input nz-input [(ngModel)]="todo.title" />
+                  <input nz-input [(ngModel)]="todo.title" class="edit-input" />
                 </ng-template>
-                
+
                 <ul nz-list-item-actions>
                   <nz-list-item-action>
-                    <button *ngIf="!todo.editing" nz-button (click)="startEdit(todo)">
+                    <button *ngIf="!todo.editing" nz-button nzType="default" class="action-button" (click)="startEdit(todo)">
                       Edit
                     </button>
-                    <button *ngIf="todo.editing" nz-button (click)="saveEdit(todo)">
+                    <button *ngIf="todo.editing" nz-button nzType="primary" class="action-button save-button" (click)="saveEdit(todo)">
                       Save
                     </button>
-                    <button *ngIf="todo.editing" nz-button nzType="default" (click)="cancelEdit(todo)">
+                    <button *ngIf="todo.editing" nz-button nzType="default" class="action-button cancel-button" (click)="cancelEdit(todo)">
                       Cancel
                     </button>
                   </nz-list-item-action>
@@ -36,6 +34,7 @@
                       (click)="changeStatus(todo)"
                       nz-tooltip
                       nzTooltipTitle="Change Todo Status"
+                      class="todo-switch"
                     >
                     </nz-switch>
                   </nz-list-item-action>
@@ -49,7 +48,7 @@
                       nzPopconfirmTitle="Are you sure you want to delete?"
                       nzPopconfirmPlacement="top"
                       (nzOnConfirm)="deleteTodo(todo)"
-                      (nzOnCancel)="cancel(todo)"
+                      class="delete-button"
                     >
                       X
                     </button>
