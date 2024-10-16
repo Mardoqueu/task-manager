@@ -3,12 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Todo } from '../models/Todo';
 
-
 @Injectable()
 export class TodoListService {
   private resourceUrl = 'http://localhost:8000/todos';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   create(todo: Todo): Observable<Todo> {
     const copy = this.convert(todo);
@@ -18,6 +17,11 @@ export class TodoListService {
   update(todo: Todo): Observable<Todo> {
     const copy = this.convert(todo);
     return this.http.put<Todo>(`${this.resourceUrl}/${copy.id}`, copy);
+  }
+
+  // Função para editar um todo específico
+  editTodo(todo: Todo): Observable<Todo> {
+    return this.http.put<Todo>(`${this.resourceUrl}/${todo.id}`, todo);
   }
 
   find(id: number): Observable<Todo> {
@@ -36,4 +40,20 @@ export class TodoListService {
     const copy: Todo = Object.assign({}, todo);
     return copy;
   }
+
+  updateTodo(todo: Todo): Observable<Todo> {
+    return this.http.put<Todo>(`${this.resourceUrl}/${todo.id}`, todo);
+  }
+
+    // Função para buscar todos os todos
+    getTodos(): Observable<Todo[]> {
+      return this.http.get<Todo[]>(this.resourceUrl);
+    }
+  
+    // Função para deletar um todo
+    deleteTodo(id: number): Observable<any> {
+      return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+  
+  
 }

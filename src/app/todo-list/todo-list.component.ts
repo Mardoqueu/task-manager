@@ -1,49 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable } from 'rxjs';
-import { Todo } from '../models/Todo';
 import { TodoListService } from './todo-list.service';
+import { Todo } from '../models/Todo'; // Corrija o caminho conforme necessário
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss']
+  styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit {
-  todos$!: Observable<Todo[]>;
+  todos$: Observable<Todo[]> = new Observable<Todo[]>();
 
-  constructor(
-    private todoListService: TodoListService,
-    private nzMessageService: NzMessageService
-  ) { }
+  constructor(private todoListService: TodoListService) {}
 
-  loadAll = () => {
-    this.todos$ = this.todoListService.findAll();
+  ngOnInit(): void {
+    this.loadAll();
+  }
+
+  loadAll() {
+    this.todos$ = this.todoListService.getTodos();
+  }
+
+  startEdit(todo: Todo) {
+    todo.editing = true;
+  }
+
+  saveEdit(todo: Todo) {
+    todo.editing = false;
+    this.todoListService.updateTodo(todo).subscribe(() => {
+      this.loadAll();
+    });
+  }
+
+  cancelEdit(todo: Todo) {
+    todo.editing = false;
+    this.loadAll();
   }
 
   changeStatus(todo: Todo) {
-    this.todoListService.update(todo).subscribe(() => {
-      // Recarregar a lista de todos após a atualização.
-      this.todos$ = this.todoListService.findAll();
-    });
-    this.nzMessageService.info('Changed Status');
+    todo.completed = !todo.completed; // Toggle the status
+    this.todoListService.updateTodo(todo)
+      .subscribe(() => {
+        this.loadAll(); // Refresh the list to reflect changes
+      });
   }
   
 
-  deleteTodo(todo: Todo){
-    this.todoListService.delete(todo.id)
-      .subscribe(() => {
-        this.todos$ = this.todoListService.findAll();
+  deleteTodo(todo: Todo): void {
+    if (todo.id !== undefined) {
+      this.todoListService.deleteTodo(todo.id).subscribe(() => {
+        this.loadAll();
       });
-    this.nzMessageService.warning('Todo Deleted');
+    }
   }
+  
 
-  cancel(): void {
-    this.nzMessageService.info('Click cancelled');
+  cancel(todo: Todo): void {
+    todo.editing = false; 
   }
-
-  ngOnInit(): void {
-    this.todos$ = this.todoListService.findAll();
-  }
-
+  
 }

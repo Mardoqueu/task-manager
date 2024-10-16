@@ -1,14 +1,36 @@
 .inner-content {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+nz-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nz-list-item-action {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .inner-content {
+      padding: 10px;
   }
-  
-  nz-list-item {
-    display: flex;
-    justify-content: space-between;
+
+  h1 {
+      font-size: 1.5em;
   }
-  
-  nz-list-item-action {
-    margin-left: auto; /* Garante que as ações fiquem alinhadas à direita */
+
+  input {
+      width: 100%;
   }
-  
+
+  button {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+}
