@@ -22,12 +22,13 @@ export class TodoListComponent implements OnInit {
   }
 
   changeStatus(todo: Todo) {
-    this.todoListService.update(todo)
-      .subscribe(() => {
-        this.todos$ = this.todoListService.findAll();
-      });
+    this.todoListService.update(todo).subscribe(() => {
+      // Recarregar a lista de todos após a atualização.
+      this.todos$ = this.todoListService.findAll();
+    });
     this.nzMessageService.info('Changed Status');
   }
+  
 
   deleteTodo(todo: Todo){
     this.todoListService.delete(todo.id)

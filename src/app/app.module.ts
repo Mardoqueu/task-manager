@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,8 +8,8 @@ import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NzButtonModule } from 'ng-zorro-antd/button';
 import { TodoFormComponent } from './todo-form/todo-form.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 
@@ -23,6 +22,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
@@ -80,6 +80,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzPipesModule } from 'ng-zorro-antd/pipes';
+
 import { TodoListService } from './todo-list/todo-list.service';
 
 registerLocaleData(en);
@@ -165,11 +166,7 @@ registerLocaleData(en);
     NzResizableModule,
     NzPipesModule,
   ],
-  providers: [
-    provideClientHydration(),
-    { provide: NZ_I18N, useValue: en_US },
-    TodoListService,
-  ],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, TodoListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

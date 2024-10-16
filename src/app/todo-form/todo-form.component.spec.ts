@@ -8,10 +8,12 @@ describe('TodoFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TodoFormComponent]
+      declarations: [ TodoFormComponent ]
     })
     .compileComponents();
-    
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(TodoFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
